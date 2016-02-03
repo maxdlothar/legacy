@@ -1,0 +1,155 @@
+body {
+/*  background: #fff; */
+  color: #000;
+  font: 0.8em sans-serif;
+}
+h1 {
+  position: relative;
+  height: 60px;
+  margin-top: 0;
+  color: #fff;
+  background: #000;
+  margin-bottom: 15px;
+}
+h1 span {
+  background: url(https://secure.latestinfo.co.uk/shared/corporate/images/inform_banner_1024x60_faded.png) no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+h2 {
+  font-size: 145%;
+  margin-right: -10px;
+  margin-left: -10px;
+  padding: 5px 10px 4px 10px;
+  background: #222;
+  color: #fff;
+}
+h3 {
+  font-size: 130%;
+}
+img {
+  border: 0;
+}
+form label {
+  display: block;
+  font-weight: bold;
+}
+form fieldset {
+  margin-bottom: 1em;
+  padding: 0 0.8em 0.4em 0.8em;  /* For IE */
+}
+form legend {
+  padding-bottom: 0.4em;
+}
+form fieldset p {
+  margin-top: 0;
+  margin-bottom: 0.4em;
+}
+form .buttons {
+  padding: 0.4em 0.6em;
+}
+ul {
+  margin-left: 0;  /* For IE */
+  padding-left: 1.8em;
+}
+ul li {
+  list-style: none;
+  padding-left: 20px;
+  padding-bottom: 2px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/bullet_black.png) no-repeat;
+}
+#content {
+  padding: 0 10px;
+}
+#footer {
+  margin-top: 1.5em;
+  padding: 0 10px;
+  text-align: right;
+  font-size: 90%;
+  color: #888;
+}
+#navtop {
+  margin-top: -15px;
+  padding: 4px 10px 3px 10px;
+  font-weight: bold;
+  color: #222;
+  background: #f0d9ae url(https://secure.latestinfo.co.uk/shared/corporate/images/background_fader_orange.png) repeat-y;
+}
+#navtop a:link,
+#navtop a:visited {
+  text-decoration: none;
+  color: #222;
+}
+#navtop a:hover,
+#navtop a:active {
+  color: #822;
+}
+.breadcrumbs {
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs li {
+  display: inline;
+  padding-top: 1px;
+  padding-left: 18px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/c_separator_right.png) no-repeat center left;
+}
+.breadcrumbs .first_crumb {
+  padding-left: 0;
+  background: none;
+  /*padding-left: 15px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/stockholm/mini/home.png) no-repeat center left;*/
+}
+.information {
+  padding-left: 20px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/information.png) no-repeat;
+}
+.error {
+  padding-left: 20px;
+  font-weight: bold;
+  color: #b22222;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/error.png) no-repeat;
+}
+.error_user {
+  font-weight: bold;
+  color: #b00;
+  padding-left: 20px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/exclamation.png) no-repeat;
+}
+.error_security {
+  padding-left: 20px;
+  font-weight: bold;
+  color: #b22222;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/exclamation.png) no-repeat;
+}
+.success_user {
+  font-weight: bold;
+  color: #090;
+}
+.username {
+  padding-right: 20px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/user.png) no-repeat top right;
+}
+.list_links li {
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/bullet_go.png) no-repeat;
+}
+.internal {
+  padding: 0.1em 0.8em;
+  margin: 0 -0.8em;
+  background: #fff8dc;  /* cornsilk */
+  border: 1px solid #f0e68c;  /* khaki */
+}
+.note {
+  color: #444;
+}
+.tip {
+  color: #556b2f;  /* darkolivegreen */
+}
+.activelink {
+	color: #0000a0;
+	font-weight: 600;
+}
+.inactivelink {
+	color: #7777a0;
+}

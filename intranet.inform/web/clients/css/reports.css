@@ -1,0 +1,73 @@
+h2 {
+  font-size: 130%;
+}
+.note {
+  color: #666;
+}
+table {
+  border-collapse: collapse;
+  border: 1px solid #666;
+  background: #fff;
+}
+table th {
+  text-align: left;
+  border-bottom: 1px solid #666;
+}
+table th,
+table td {
+  padding: 4px 10px 3px 6px;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+}
+table .dark {
+  background: #e6e6e6;
+}
+table .heavyleft {
+  border-left: 2px solid #777;
+}
+table .subtotal td {
+  font-weight: bold;
+  border-top: 1px solid #777;
+}
+table .grandtotal td {
+  font-weight: bold;
+  border-top: 2px solid #777;
+}
+table .sectiongroup th {
+  padding-top: 6px;
+  padding-bottom: 4px;
+  border-top: 2px solid #444;
+  border-bottom: 1px solid #b4b4b4;
+  background: #dcdcdc;  /* Gainsboro */
+  text-align: center;
+}
+table .generalgroup th {
+  padding-top: 5px;
+  padding-bottom: 3px;
+  background: #dcdcdc;  /* Gainsboro */
+  text-align: center;
+}
+table .grouptotal {
+  font-weight: bold;
+  border-top: 1px solid #bbb;
+}
+table .sectionnum {
+/*
+  white-space: pre;
+  font: 1.2em monospace;
+  color: #666;
+  */
+  text-align: right;
+}
+.tdtick {
+  /*background: url(https://secure.informcommunications.plc.uk/shared/icons/silk/tick.png) no-repeat center;*/
+  background-image: url(https://secure.informcommunications.plc.uk/shared/icons/silk/tick.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.tdcross {
+  /*background: url(https://secure.informcommunications.plc.uk/shared/icons/silk/cross.png) no-repeat center;*/
+  background-image: url(https://secure.informcommunications.plc.uk/shared/icons/silk/cross.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}

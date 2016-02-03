@@ -1,0 +1,192 @@
+html { 
+  background: url(https://secure.latestinfo.co.uk/shared/corporate/images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+body {
+/*  background: #fff; */
+  color: #2c2d35;
+  font: 0.8em sans-serif;
+}
+h1 {
+  position: relative;
+  height: 60px;
+  margin-top: 0;
+  color: #fff;
+  background: #000;
+  margin-bottom: 15px;
+}
+h1 span {
+background-image: url(https://secure.latestinfo.co.uk/shared/corporate/images/inform_banner_1024x60_faded.png);
+background-position: left center;
+background-repeat: no-repeat;
+
+/*  background: url(https://secure.latestinfo.co.uk/shared/corporate/images/inform_banner_1024x60_faded.png) no-repeat; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+h2 {
+  margin-right: -10px;
+  margin-left: -10px;
+  padding: 5px 10px 4px 10px;
+  background:linear-gradient(to bottom, #3a3936, #53514a);
+  font-weight: normal;
+  font-size: 1em;
+  border-style:solid;
+  border-width:1px;
+  border-top-color: #41403b;
+  border-bottom-color: #42413c;
+  border-left-color: #41403b;
+  border-right-color: #41403b;
+  margin-top:0px;
+  color: #dfdbd1;
+}
+h3 {
+  font-size: 130%;
+  color: #2c2d35;
+  font-weight: normal;
+}
+img {
+  border: 0;
+  box-shadow: 10px 10px 5px #888888;
+}
+form label {
+  display: block;
+  font-weight: normal;
+}
+form fieldset {
+  margin-bottom: 1em;
+  padding: 0 0.8em 0.4em 0.8em;  /* For IE */
+  border-radius: 6px;
+  box-shadow: 5px 5px 5px #696969;
+  margin-left:30%;
+  margin-right:30%;
+  background-color: #f5f5f5;
+}
+form legend {
+  padding-bottom: 0.4em;
+}
+form fieldset p {
+  margin-top: 0;
+  margin-bottom: 0.4em;
+}
+form .buttons {
+  padding: 0.4em 0.6em;
+}
+ul {
+  margin-left: 0;  /* For IE */
+  padding-left: 1.8em;
+}
+ul li {
+  list-style: none;
+  padding-left: 20px;
+  padding-bottom: 2px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/bullet_black.png) no-repeat;
+}
+#content {
+  padding: 0 10px;
+}
+#content a:link,
+#content a:visited {
+  text-decoration: none;
+  color: #333333;
+}
+#content a:hover,
+#content a:active {
+  color: #708090;
+}
+#footer {
+  margin-top: 1.5em;
+  padding: 0 10px;
+  text-align: right;
+  font-size: 90%;
+  color: #888;
+}
+#navtop {
+  margin-top: -15px;
+  padding: 4px 10px 3px 10px;
+  color: #222;
+  background:linear-gradient(to bottom, #3a3936, #53514a);
+  font-weight: normal;
+  border-style:solid;
+  border-width:1px;
+  border-top-color: #41403b;
+  border-bottom-color: #42413c;
+}
+#navtop a:link,
+#navtop a:visited {
+  text-decoration: none;
+  color: #dfdbd1;
+}
+#navtop a:hover,
+#navtop a:active {
+  color: #fff;
+}
+.breadcrumbs {
+  margin: 0;
+  padding: 0;
+}
+.breadcrumbs li {
+  display: inline;
+  padding-top: 1px;
+  margin-left: 10px;
+  padding-left: 30px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/c_separator_right.png) no-repeat center left;
+  color: #dfdbd1;
+}
+.breadcrumbs .first_crumb {
+  padding-left: 0px;
+  margin-left: 0px;
+  background: none;
+  /*padding-left: 15px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/stockholm/mini/home.png) no-repeat center left;*/
+}
+.information {
+  padding-left: 20px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/information.png) no-repeat;
+}
+.error {
+  padding-left: 20px;
+  font-weight: bold;
+  color: #b22222;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/error.png) no-repeat;
+}
+.error_user {
+  font-weight: bold;
+  color: #b00;
+  padding-left: 20px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/exclamation.png) no-repeat;
+}
+.error_security {
+  padding-left: 20px;
+  font-weight: bold;
+  color: #b22222;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/exclamation.png) no-repeat;
+}
+.success_user {
+  font-weight: bold;
+  color: #090;
+}
+.username {
+  padding-right: 20px;
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/user.png) no-repeat top right;
+}
+.list_links li {
+  background: url(https://secure.latestinfo.co.uk/shared/icons/silk/bullet_go.png) no-repeat;
+}
+.internal {
+  padding: 0.1em 0.8em;
+  margin: 0 -0.8em;
+  background: #fff8dc;  /* cornsilk */
+  border: 1px solid #f0e68c;  /* khaki */
+}
+.note {
+  color: #444;
+}
+.tip {
+  color: #556b2f;  /* darkolivegreen */
+}
+

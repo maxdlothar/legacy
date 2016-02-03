@@ -1,0 +1,71 @@
+h2 {
+  position: relative;
+  height: 1.2em;
+}
+#file_list {
+  width: 100%;
+}
+#file_list {
+  border-collapse: collapse;
+}
+#file_list th {
+  text-align: left;
+  border-bottom: 2px solid #bbb;
+}
+#file_list .heading_filename {
+  padding-left: 30px;
+}
+#file_list .light:hover,
+#file_list .dark:hover {
+  background: #eb7;
+}
+#file_list td {
+  padding: 2px 0;
+}
+#file_list .dark {
+  background: #e6e6e6;
+}
+#file_list a:link {
+  margin-left: 10px;
+  padding-left: 20px;
+  text-decoration: none;
+  color: #000;
+  background: url(/shared/corporate/icons/download_arrow.png) no-repeat center left;
+}
+#file_list a:visited {
+  margin-left: 10px;
+  padding-left: 20px;
+  text-decoration: none;
+  color: #222;
+  background: url(/shared/corporate/icons/green_tick.png) no-repeat center left;
+}
+.data_protection_notice {
+  margin-top: 1em;
+  padding: 4px 2px 4px 28px;
+  background: #eee url('/shared/icons/data_protection_padlock_icon.png') no-repeat 8px center;
+  border: 1px solid #aaa;
+}
+.data_protection_notice p {
+  margin: 0;
+}
+.footer {
+  text-align: right;
+  font-size: 90%;
+  color: #888;
+}
+#h2options {
+  float: right;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 65%;
+  font-weight: normal;
+  color: #666;
+}
+#h2options a:link,
+#h2options a:visited,
+#h2options a:hover,
+#h2options a:active {
+  color: inherit;
+}
+

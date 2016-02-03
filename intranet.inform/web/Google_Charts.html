@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+		// Load the Visualization API and the piechart package
+      google.charts.load("current", {packages:["corechart"]});
+
+		// Set a callback to run when API is loaded
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+		// Chart 1
+        var data1 = google.visualization.arrayToDataTable([
+          ['Rate', 'Information'],
+          ['Average',     172],
+          ['Good',      376],
+          ['Poor',  387],
+        ]);
+        var options1 = {
+          title: 'March-August 2013',
+          is3D: true,
+        };
+        var chart1 = new google.visualization.PieChart(document.getElementById('chart_div1'));
+        chart1.draw(data1, options1);
+
+		// Chart 2	  
+        var data2 = google.visualization.arrayToDataTable([
+          ['Rate', 'Service'],
+          ['Average',     314],
+          ['Good',      468],
+          ['Poor',  459],
+        ]);
+        var options2 = {
+          title: 'March-August 2014',
+          is3D: true,
+        };
+        var chart2 = new google.visualization.PieChart(document.getElementById('chart_div2'));
+        chart2.draw(data2, options2);
+
+		// Chart 3	  
+        var data3 = google.visualization.arrayToDataTable([
+          ['Resolved', ''],
+          ['Average',     240],
+          ['Good',      361],
+          ['Poor',  433],
+        ]);
+        var options3 = {
+          title: 'March-August 2015',
+          is3D: true,
+        };
+        var chart3 = new google.visualization.PieChart(document.getElementById('chart_div3'));
+        chart3.draw(data3, options3);
+      }
+	       
+    </script>
+  </head>
+  <body>
+   <div id="chart_div1" style="width: 900px; height: 500px;"></div>
+	<div id="chart_div2" style="width: 900px; height: 500px;"></div>
+	<div id="chart_div3" style="width: 900px; height: 500px;"></div>
+	Surveys Taken    2033
+  </body>
+</html>
+
+
+

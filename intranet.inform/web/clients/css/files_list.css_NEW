@@ -1,0 +1,70 @@
+h2 {
+  position: relative;
+  height: 1.2em;
+/*  font-size: 130%; */
+}
+#file_list {
+  width: 100%;
+}
+#file_list {
+  border-collapse: collapse;
+}
+#file_list th {
+  text-align: left;
+  border-bottom: 2px solid #bbb;
+}
+#file_list .heading_filename {
+  padding-left: 30px;
+}
+#file_list .light:hover,
+#file_list .dark:hover {
+  background: #d3d3d3;
+}
+#file_list td {
+  padding: 2px 0;
+}
+#file_list .dark {
+  background: #e6e6e6;
+}
+#file_list a:link {
+  margin-left: 10px;
+  padding-left: 18px;
+  text-decoration: none;
+  color: #000;
+  padding-left: 22px;
+/*  background: url('/shared/icons/stockholm/variants/arrow_down_blue_16x16.png') no-repeat;*/
+  background: url('/shared/icons/silk/page_white_put.png') no-repeat;
+}
+#file_list a:visited {
+  margin-left: 10px;
+  padding-left: 20px;
+  text-decoration: none;
+  color: #222;
+  padding-left: 20px;
+/*  background: url('/shared/icons/stockholm/variants/tick_green_16x16.png') no-repeat;*/
+  background: url('/shared/icons/silk/c_page_white_tick.png') no-repeat;
+}
+.data_protection_notice {
+  margin-top: 1em;
+  padding: 4px 2px 4px 28px;
+  background: #eee url('/shared/icons/data_protection_padlock_icon.png') no-repeat 8px center;
+  border: 1px solid #aaa;
+}
+.data_protection_notice p {
+  margin: 0;
+}
+#h2options {
+  float: right;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 90%;
+  font-weight: normal;
+  color: #bbb;
+}
+#h2options a:link,
+#h2options a:visited,
+#h2options a:hover,
+#h2options a:active {
+  color: #bbb;
+}

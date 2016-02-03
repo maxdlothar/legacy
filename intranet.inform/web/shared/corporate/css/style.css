@@ -1,0 +1,21 @@
+#maintable td {
+  font-family: verdana;
+  font-size: 12px;
+  height: 16px;
+  padding: 0px 5px;
+  text-align: left;
+}
+
+td.title {
+  font-weight:bold;
+  border-bottom: 1px solid #aaa;
+ }
+ 
+tr.zebra {
+   background-color:#eee; 
+}
+
+.bold {
+  font-weight:bold;
+}
+

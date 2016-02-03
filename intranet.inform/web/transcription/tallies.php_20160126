@@ -1,0 +1,185 @@
+<HTML>
+	<head>
+		<title>Transcriptions</title>
+	</head>
+	<BODY>
+		<?
+			$midnight=date('Y-m-d', time()-(date('N')=='1'?259200:86400));
+			$username="root";
+			$password="password";
+			//$database="system";
+			//mysql_connect("192.168.1.209",$username,$password);
+			//@mysql_select_db($database) or die('Unable to select database');
+			//$query="SELECT * FROM oldload ORDER BY loaddesc, loadsort ASC";
+			//$oldresult=mysql_query($query);
+			//mysql_close();
+
+			$database="loader07";
+			mysql_connect("192.168.1.209",$username,$password);
+			@mysql_select_db($database) or die( "Unable to select database");
+
+			$query="SELECT messageservice,messagetime FROM system.messages WHERE messageservice='Export08' ORDER BY messagetime";
+			$result=mysql_query($query);
+			if (mysql_numrows($result)>0) echo "<p style='color:red;'>There Are Export Errors:".mysql_result($result,0,'messagetime')."</p>";
+
+			$query="SELECT serviceid, records.exportset, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, MIN(calltime) AS callfirst, MAX(calltime) AS calllast, loadclass, loadurgent, loadinto, exportdesc FROM records LEFT JOIN exports ON (exports.service=serviceid AND exports.exportset=records.exportset AND (NOW() BETWEEN exportfrom AND exportuntil)) WHERE loadtime IS NULL GROUP BY serviceid, loadinto, calldate, loadurgent, loadclass ORDER BY callfirst, serviceid, loadinto, calldate ASC";
+			//$query="SELECT serviceid, servicesub, exportset, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, MIN(calltime) AS callfirst, MAX(calltime) AS calllast, loadclass, loadurgent, loadinto FROM records WHERE loadtime IS NULL GROUP BY serviceid, servicesub, calldate, loadurgent, loadclass ORDER BY callfirst, serviceid, servicesub, calldate ASC";
+			//$query="SELECT serviceid, servicesub, exportset, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, MIN(calltime) AS callfirst, MAX(calltime) AS calllast, loadurgent, loadtest, loadinto FROM records WHERE loadtime IS NULL GROUP BY serviceid, servicesub, calldate, loadurgent, loadtest ORDER BY callfirst, serviceid, servicesub, calldate ASC";
+			//$query="SELECT serviceid, servicesub, exportset, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, MIN(calltime) AS callfirst, MAX(calltime) AS calllast, loadurgent, loadtest, loadinto FROM records WHERE loadtime IS NULL GROUP BY serviceid, servicesub, exportset, calldate, loadurgent, loadtest ORDER BY callfirst, serviceid, servicesub, exportset, calldate ASC";
+			//echo $query;
+			$result=mysql_query($query);
+			//echo mysql_error();
+			$num=mysql_numrows($result);
+			if ($num>0) {
+				$i=0;
+				echo "<h3>Not Yet Loaded</h3>\n";
+				echo "<table width=100% border=0>\n";
+				echo "<th width='10%'>Earliest</th><th width='10%'>Latest</th><th width='5%'>Count</th><th>Client/Service</th>\n";
+				//echo "<th width='10%'>Earliest</th><th width='10%'>Latest</th><th width='5%'>Count</th><th>Client/Service</th><th width='10%'>Export</th>\n";
+				while ($i < $num) {
+					echo "<tr>";
+					$serviceid=mysql_result($result,$i,'serviceid');
+					//$servicesub=mysql_result($result,$i,'servicesub');
+					$exportset=mysql_result($result,$i,'exportset');
+					$recordsum=mysql_result($result,$i,'recordsum');
+					$calldate=mysql_result($result,$i,'calldate');
+					$callfirst=mysql_result($result,$i,'callfirst');
+					$calllast=mysql_result($result,$i,'calllast');
+					$LoadClass=mysql_result($result,$i,'loadclass');
+					$loadurgent=mysql_result($result,$i,'loadurgent');
+					//$loadtest=mysql_result($result,$i,'loadtest');
+					$loadinto=mysql_result($result,$i,'loadinto');
+					if (($exportdesc=mysql_result($result,$i,'exportdesc'))=='') {
+						$exportdesc="{{$serviceid}/{$exportset}}";
+					}
+					$LongName="{$serviceid}/{$loadinto}";
+					//$LongName=GetAName($serviceid, $exportset, $servicesub);
+
+					if ($loadurgent=='1') {
+						$strongon='&nbsp;<strong><font color=red>';
+						$strongoff='</font></strong>&nbsp;';
+					}
+					else {
+						switch ($LoadClass) {
+							case 'T':
+								$strongon="&nbsp;<strong><font color=blue>";
+								$strongoff="</font></strong>&nbsp;";
+								break;
+							case 'I':
+								$strongon="&nbsp;<strong><font color='#00C000'>";
+								$strongoff="</font></strong>&nbsp;";
+								break;
+							case 'C':
+								$strongon="&nbsp;<strong><font color=purple>";
+								$strongoff="</font></strong>&nbsp;";
+								break;
+							default:
+								$strongon='&nbsp;<strong><font color="#008000">';
+								$strongoff='</font></strong>&nbsp;';
+						}
+					}
+					echo "<td align=right>{$strongon}".substr($callfirst,8,8)."{$strongoff}-</td><td>{$strongon}".substr($calllast,11,5).$strongoff."</td><td align=right>{$strongon}{$recordsum}{$strongoff}</td><td>{$strongon}{$LongName}{$strongoff}</td><td>{$strongon}{$exportdesc}{$strongoff}</td>\n";
+					//echo "<td align=right>".$strongon.substr($callfirst,8,8).$strongoff."-</td><td>".$strongon.substr($calllast,11,5).$strongoff."</td><td align=right>".$strongon.$recordsum.$strongoff."</td><td>".$strongon.$LongName.$strongoff."</td><td>".$strongon.$exportset.$strongoff."</td>\n";
+					echo "</tr>";
+					$i++;
+				}
+				echo "</table>\n";
+			}
+
+			$query="SELECT serviceid, servicesub, exportset, loadclass, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, DATE_FORMAT(loadtime,'%Y-%m-%d') AS loaddate, loadinto FROM records WHERE senttime IS NULL AND loadtime IS NOT NULL GROUP BY serviceid, exportset, calldate, loaddate, loadclass ORDER BY serviceid, exportset, calldate, loaddate ASC";
+			//$query="SELECT serviceid, servicesub, exportset, loadclass, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, DATE_FORMAT(loadtime,'%Y-%m-%d') AS loaddate, loadinto FROM records WHERE exporttime IS NULL AND loadtime IS NOT NULL GROUP BY serviceid, exportset, calldate, loaddate, loadclass ORDER BY serviceid, exportset, calldate, loaddate ASC";
+			//$query="SELECT serviceid, servicesub, exportset, COUNT(recorduri) AS recordsum, DATE_FORMAT(calltime,'%Y-%m-%d') AS calldate, DATE_FORMAT(loadtime,'%Y-%m-%d') AS loaddate, loadtest, loadinto FROM records WHERE exporttime IS NULL AND loadtime IS NOT NULL GROUP BY serviceid, exportset, calldate, loaddate, loadtest ORDER BY serviceid, exportset, calldate, loaddate ASC";
+			//echo $query;
+			$result=mysql_query($query);
+			//echo mysql_error();
+			$num=mysql_numrows($result);
+			if ($num>0) {
+				$i=0;
+				echo "<h3>Not Yet Sent</h3>\n";
+				echo "<table width=100% border=0>\n";
+				echo "<th>Client/Service</th><th>Count</th><th>Call</th><th>Loaded</th>\n";
+				//echo "<th>Client/Service</th><th>Export</th><th>Count</th><th>Call</th><th>Loaded</th>\n";
+				while ($i < $num) {
+					$loaddate=mysql_result($result,$i,'loaddate');
+					//if (empty($loaddate)==$groupon) {
+						echo "<tr>";
+						$serviceid=mysql_result($result,$i,'serviceid');
+						$servicesub=mysql_result($result,$i,'servicesub');
+						$exportset=mysql_result($result,$i,'exportset');
+						$recordsum=mysql_result($result,$i,'recordsum');
+						$calldate=mysql_result($result,$i,'calldate');
+						//$loadtest=mysql_result($result,$i,'loadtest');
+						$LoadClass=mysql_result($result,$i,'loadclass');
+						$LongName=GetAName($serviceid, $exportset, $servicesub);
+
+						if ((($loaddate<$midnight) or (strpos($LongName, '}'))) and ($LoadClass!='I')) {
+							$strongon='<strong><font_color=red>';
+							$strongoff='</font></strong>&nbsp;';
+						}
+						else {
+							switch ($LoadClass) {
+								case 'T':
+									$strongon="&nbsp;<strong><font_color=blue>";
+									$strongoff='</font></strong>&nbsp;';
+									break;
+								case 'I':
+									$strongon="&nbsp;<font_color=green>";
+									$strongoff='</font>&nbsp;';
+									break;
+								case 'C':
+									$strongon="&nbsp;<strong><font_color=purple>";
+									$strongoff='</font></strong>&nbsp;';
+									break;
+								default:
+									$strongon='&nbsp;';
+									$strongoff='&nbsp;';
+							}
+						}
+						//$strongon=$loadtest?'&nbsp;<strong><font_color=blue>':(($loaddate<$midnight)?'<strong><font_color=red>':'&nbsp;');
+						//$strongoff=($loaddate<$midnight)?'</font></strong>':'';
+						echo str_replace('_', ' ', str_replace(' ', '&nbsp;', "<td>{$strongon}{$LongName}{$strongoff}</td><td_align=right>{$strongon}{$recordsum}{$strongoff}</td><td_align=right>{$strongon}{$calldate}{$strongoff}</td><td_align=right>{$strongon}{$loaddate}{$strongoff}</td>\n"));
+						//echo "<td>{$strongon}{$LongName}{$strongoff}</td><td align=right>{$strongon}{$recordsum}{$strongoff}</td><td align=right>{$strongon}{$calldate}{$strongoff}</td><td align=right>{$strongon}{$loaddate}{$strongoff}</td>\n";
+						//echo '<td>'.$strongon.$LongName.$strongoff.'</td><td>'.$strongon.$exportset.$strongoff.'</td><td>'.$strongon.$recordsum.$strongoff.'</td><td>'.$strongon.$calldate.$strongoff.'</td><td>'.$strongon.$loaddate.$strongoff."</td>\n";
+						echo '</tr>';
+					//}
+					$i++;
+				}
+				echo "</table>\n";
+			}
+
+			function GetAName($serviceid, $exportset, $servicesub) {
+				global $NameList;
+				$NameCode=$serviceid."/".$exportset;
+				$RetName=isset($NameList{$NameCode})?$NameList{$NameCode}:'';
+				if (empty($RetName)) {
+					$query="SELECT exportdesc,exporttimes FROM exports WHERE service='{$serviceid}' and exportset in ('{$exportset}', '@split{$exportset}') and exportfrom<=now() and exportuntil>=now() and exportdesc>'' and exporttimes<>'@'";
+					//echo $query;
+					$longresult=mysql_query($query);
+					if (mysql_numrows($longresult)>0) {
+						$RetSingle=(strpos(mysql_result($longresult,0,'exporttimes'), 'KkLlMmNnOoPpQ')!==FALSE);
+						$RetName=mysql_result($longresult,0,'exportdesc');
+					//if ($RetName=='') {
+						//$query="SELECT exportdesc FROM exports WHERE service='".$serviceid."' and exportset='".$exportset."' and exportfrom<=now() and exportuntil>=now() and exportdesc>'' and exporttimes<>'@'";
+						//$query="SELECT servicename FROM services WHERE service='".$serviceid."' and servsub='".$servicesub."' and servicestart<=now() and serviceend>=now()";
+						//echo $query;
+						//$longresult=mysql_query($query);
+						//if (mysql_numrows($longresult)>0) {
+						//	$RetName='('.mysql_result($longresult,0,'servicename')."/{$exportset})";
+						//}
+					//}
+						$NameList{$NameCode}=($RetSingle)?("<b>{$RetName}</b>"):($RetName);
+					}
+					else {
+						$NameList{$NameCode}="{{$NameCode}}";
+					}
+				}
+				return ($NameList{$NameCode});
+				//return (empty($RetName)?'{'.$serviceid.'/'.$exportset.'}':$RetName);
+			}
+
+			mysql_close();
+
+			//$num=mysql_numrows($result);
+		?>
+	</BODY>
+</HTML>

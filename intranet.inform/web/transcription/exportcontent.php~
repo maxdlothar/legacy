@@ -1,0 +1,167 @@
+<?
+include('../includes/header.php');
+$exporttime=(isset($_REQUEST['exporttime']))?$_REQUEST['exporttime']:false;
+echo "<head><title>Export Contents</title></head>\n";
+echo "<BODY>\n";
+
+//var_dump($banner_agent);
+
+	$midnight=date('Y-m-d', time()-(date('N')=='1'?259200:86400));
+	$username="root";
+	$password="password";
+
+	$database="loader07";
+	mysql_connect("192.168.1.209",$username,$password);
+	@mysql_select_db($database) or die( "Unable to select database");
+
+	if (isset($_REQUEST['recall'])) {
+		$recalluri=$_REQUEST['recall'];
+		$query="UPDATE records SET loadtime=NULL, exporttime=NULL WHERE recorduri='{$recalluri}' AND (senttime IS NULL) AND (loadtime IS NOT NULL) LIMIT 1";
+		//echo "$query<br>\n";
+		if (mysql_query($query)) echo "Record {$recalluri} recalled!";
+			else  echo "Record {$recalluri} could not be recalled!";
+	}
+//2012-07-30 09:50:59
+	if (isset($_REQUEST['random'])) {
+		$randomcount=min(50, max(1, $_REQUEST['random']));
+		//if ($randomcount<1) $randomcount=1;
+		//else if ($randomcount>50) $randomcount=50;
+		$query="SELECT * FROM records WHERE exporttime>DATE_ADD(NOW(), INTERVAL -7 DAY) AND loadagent!='XXX' AND loadempty=0 AND loadexclude=0 AND recorduri like '%t' ORDER BY RAND() LIMIT {$randomcount}";
+		echo $query;
+		$result=mysql_query($query);
+		$num=mysql_numrows($result);
+		$urilist='"1234567890"'; //Does not exist.
+		$i=0;
+		while ($i < $num) {
+			$urilist.=', "'.mysql_result($result,$i,'recorduri').'"';
+			$i++;
+		}
+		$query="SELECT * FROM records LEFT JOIN additional ON records.recorduri=additional.recorduri WHERE records.recorduri IN ({$urilist})";
+//		echo $query;
+	}
+	elseif (isset($_REQUEST['randomloaded'])) {
+		$randomcount=min(50, max(1, $_REQUEST['randomloaded']));
+		$query="SELECT * FROM records WHERE exporttime IS NULL AND loadagent!='XXX' AND loadempty=0 AND loadexclude=0 AND recorduri like '%t' ORDER BY RAND() LIMIT {$randomcount}";
+		$result=mysql_query($query);
+		$num=mysql_numrows($result);
+		$urilist='"1234567890"'; //Does not exist.
+		$i=0;
+		while ($i < $num) {
+			$urilist.=', "'.mysql_result($result,$i,'recorduri').'"';
+			$i++;
+		}
+		$query="SELECT * FROM records LEFT JOIN additional ON records.recorduri=additional.recorduri WHERE records.recorduri IN ({$urilist})";
+	}
+	else if (isset($_REQUEST['exporturi'])) {
+		$exporturi=$_REQUEST['exporturi'];
+		$query="SELECT * FROM records LEFT JOIN additional ON records.recorduri=additional.recorduri WHERE records.recorduri='$exporturi'";
+	}
+	else if (isset($_REQUEST['agentinit'])) {
+		if (agent_ingroup('C') and ($_REQUEST['agentinit']>'')) $agentinit=$_REQUEST['agentinit'];
+			else $agentinit=$banner_agent['agentinit'];
+		$agentlogin=$banner_agent['agentlogin'];
+//echo $agentinit;
+		//$agentinit=$_REQUEST['agentinit'];
+		$query="SELECT * FROM records WHERE loadagent in ('{$agentinit}', '{$agentlogin}') AND loadtime>DATE_ADD(NOW(), INTERVAL -7 DAY) AND exporttime IS NULL ORDER BY LOADTIME DESC";
+//echo $query;
+		$result=mysql_query($query);
+		$num=mysql_numrows($result);
+		$urilist='"1234567890"'; //Does not exist.
+		$i=0;
+		while ($i < $num) {
+			$urilist.=',"'.mysql_result($result,$i,'recorduri').'"';
+			$i++;
+		}
+		$query="SELECT * FROM records LEFT JOIN additional ON records.recorduri=additional.recorduri WHERE records.recorduri IN ({$urilist}) ORDER BY loadtime DESC";
+	//echo $query;
+	}
+	else if (isset($_REQUEST['exportunsent'])) {
+		$query="SELECT * FROM records LEFT JOIN additional ON records.recorduri=additional.recorduri WHERE records.senttime IS NULL AND calltime<'".date('Y-m-d')."' AND loadtime<'".date('Y-m-d')."' ORDER BY calltime";
+	}
+	else {
+		$query="SELECT * FROM records LEFT JOIN additional ON records.recorduri=additional.recorduri WHERE exporttime='{$exporttime}'";
+	}
+	//echo $query;
+	$result=mysql_query($query);
+	$num=mysql_numrows($result);
+
+	echo "{$num} records found...\n";
+	echo "<table>\n";
+
+	$i=0;
+	$lasturi='';
+	while ($i < $num) {
+		$recorduri=mysql_result($result,$i,'recorduri');
+		if ($recorduri!=$lasturi) {
+			$lasturi=$recorduri;
+			if ((mysql_result($result,$i,'loadempty')=='1') or (mysql_result($result,$i,'loadexclude')=='1')) {
+				$colourhead='#FFAAAA';
+				$colourbody='#FFEEEE';
+			}
+			else {
+				switch (mysql_result($result,$i,'loadclass')) {
+					case 'T':
+				//if (mysql_result($result,$i,'loadtest')=='1') {
+						$colourhead='#AADDDD';
+						$colourbody='#EEFFFF';
+						break;
+				//}
+				//else {
+					case 'I':
+						$colourhead='#AAAAFF';
+						$colourbody='#EEEEFF';
+						break;
+					case 'C':
+						$colourhead='#DDAADD';
+						$colourbody='#FFEEFF';
+						break;
+					default:
+						$colourhead='#AAFFAA';
+						$colourbody='#EEFFEE';
+						break;
+				}
+			}
+			echo "<tr bgcolor={$colourhead}>";
+			echo "<td>".mysql_result($result,$i,'serviceid').'/'.mysql_result($result,$i,'servicesub').'/'.mysql_result($result,$i,'exportset')."<br>{$recorduri}</td><td>Call:".mysql_result($result,$i,'calltime')
+			." Load:".mysql_result($result,$i,'loadtime')
+			." Export:".mysql_result($result,$i,'exporttime')
+			." Sent:".mysql_result($result,$i,'senttime')
+			." DDI:".mysql_result($result,$i,'callddi')
+			." CLI:".mysql_result($result,$i,'callcli')
+			." Agent:".mysql_result($result,$i,'loadagent')
+			." Order:".mysql_result($result,$i,'ordercode')."<br>\n"
+
+			.mysql_result($result,$i,'ns_primary')
+			.' '.mysql_result($result,$i,'nf_primary')
+			.' '.mysql_result($result,$i,'nn_primary')
+			.' '.mysql_result($result,$i,'ar_primary')
+			.' '.mysql_result($result,$i,'as_primary')
+			.' '.mysql_result($result,$i,'al_primary')
+			.' '.mysql_result($result,$i,'at_primary')
+			.' '.mysql_result($result,$i,'ac_primary')
+			.' '.mysql_result($result,$i,'ap_primary')
+			.' '.mysql_result($result,$i,'pp_primary')
+			.' '.mysql_result($result,$i,'pe_primary')
+			.((mysql_result($result,$i,'loadpartial')=='1')?" (PARTIAL)":'')
+			."</td>\n";
+			if (agent_ingroup('A') and (mysql_result($result,$i,'loadinto')>'')) {
+				echo "<td><a href=?recall={$recorduri}>Recall</a></td>\n";
+			}
+			echo "</tr>";
+		}
+		$addfield=mysql_result($result,$i,'addfield');
+		$addvalue=mysql_result($result,$i,'addvalue');
+
+		echo "<tr bgcolor={$colourbody}>";
+		echo "<td>{$addfield}</td><td>{$addvalue}</td>\n";
+		echo "</tr>";
+		$i++;
+	}
+
+
+	//TOO MUCH WORK TO DO!!!!!
+	echo "</table>\n";
+
+	mysql_close();
+	include('../includes/footer.php');
+?>

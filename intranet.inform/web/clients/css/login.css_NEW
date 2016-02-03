@@ -1,0 +1,61 @@
+body {
+  padding-top: 10px;
+  font: 0.8em sans-serif;
+  text-align: center;
+  background: url(https://secure.latestinfo.co.uk/shared/corporate/images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+h1 {
+  font-size: 180%;
+  color: #2c2d35;
+}
+h2 {
+  margin-bottom: 25px;
+  font-size: 120%;
+  color: #f28111;
+}
+#login_form {
+  margin: 25px auto 0 auto;
+  width: 320px;
+/*  border: 1px solid #666; */
+}
+form {
+  margin: 0;  /* IE rendering fix */
+  padding: 15px 20px;
+  text-align: left;
+  border: 2px solid #444;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+form fieldset {
+  padding: 0;
+  border: 0;
+}
+form p {
+  margin-top: 0;
+}
+form label {
+  display: block;
+  font-weight: bold;
+}
+form input {
+  width: 100%;
+}
+form #buttons {
+  padding-top: 1em;
+  text-align: right;
+}
+form #buttons input {
+  width: auto;
+}
+.error {
+  display: inline;
+  padding-left: 20px;
+  font-weight: bold;
+  color: #b22222;
+  height: 1em;
+  background: url('/shared/icons/stockholm/16x16/alert.png') no-repeat;
+}
